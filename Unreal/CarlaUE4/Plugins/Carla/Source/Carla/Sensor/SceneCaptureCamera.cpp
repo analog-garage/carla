@@ -32,6 +32,8 @@ static constexpr auto DEPTH_MAT_PATH =
   TEXT("Material'/Carla/PostProcessingMaterials/DepthEffectMaterial_GLSL.DepthEffectMaterial_GLSL'");
 #elif PLATFORM_WINDOWS
   TEXT("Material'/Carla/PostProcessingMaterials/DepthEffectMaterial.DepthEffectMaterial'");
+#elif PLATFORM_MAC
+  TEXT("Material'/Carla/PostProcessingMaterials/DepthEffectMaterial.DepthEffectMaterial'");
 #else
 #  error No depth material defined for this platform
 #endif

@@ -18,4 +18,5 @@ Config/DefaultEditor.ini
 
 CMakeLists.txt
 Makefile
+Makefile.bak
 .vscode
