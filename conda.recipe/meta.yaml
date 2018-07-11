@@ -1,0 +1,34 @@
+{% set data = load_setup_py_data() %}
+
+package:
+  name: carla
+  version: {{ data['version'] }}
+
+source:
+  path: ../PythonClient
+
+build:
+  noarch: generic
+
+requirements:
+  build:
+    - python >=3.5.0
+    - setuptools
+
+  host:
+    - python >=3.5.0
+
+  run:
+    - python >=3.5.*
+
+    - Pillow
+    - numpy
+    - protobuf
+    - pygame
+    - matplotlib
+    - future
+
+about:
+  home: {{ data['url'] }}
+  license: {{ data['license'] }}
+  summary: {{ data['description'] }}
