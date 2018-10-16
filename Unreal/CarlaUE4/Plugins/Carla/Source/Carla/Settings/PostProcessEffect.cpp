@@ -27,6 +27,8 @@ EPostProcessEffect PostProcessEffect::FromString(const FString &String)
     return EPostProcessEffect::Depth;
   } else if (String == "SemanticSegmentation") {
     return EPostProcessEffect::SemanticSegmentation;
+  } else if (String == "Normals") {         // Added for LidarPlus
+    return EPostProcessEffect::Normals;
   } else {
     UE_LOG(LogCarla, Error, TEXT("Invalid post-processing effect \"%s\""), *String);
     return EPostProcessEffect::INVALID;

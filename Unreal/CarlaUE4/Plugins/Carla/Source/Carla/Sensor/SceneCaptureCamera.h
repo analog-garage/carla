@@ -117,4 +117,8 @@ private:
 
   UPROPERTY()
   UMaterial *PostProcessSemanticSegmentation;
+    
+  // Added for LidarPlus project
+  UPROPERTY()
+  UMaterial *PostProcessNormals;
 };

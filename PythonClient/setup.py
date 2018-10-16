@@ -4,11 +4,11 @@ from setuptools import setup
 
 setup(
     name='carla_client',
-    version='0.8.4',
+    version='0.8.5',
     packages=['carla', 'carla.driving_benchmark', 'carla.agent',
               'carla.driving_benchmark.experiment_suites', 'carla.planner'],
     license='MIT License',
-    description='Python API for communicating with the CARLA server.',
+    description='Python API for communicating with the CARLA server with LidarPlus extensions',
     url='https://github.com/carla-simulator/carla',
     author='The CARLA team',
     author_email='carla.simulator@gmail.com',

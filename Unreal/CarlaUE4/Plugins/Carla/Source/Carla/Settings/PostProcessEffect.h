@@ -16,6 +16,9 @@ enum class EPostProcessEffect : uint8
   Depth                 UMETA(DisplayName = "Depth Map"),
   SemanticSegmentation  UMETA(DisplayName = "Semantic Segmentation"),
 
+  // Added for LidarPlus project
+  Normals               UMETA(DisplayName = "World Normals"),
+
   SIZE                  UMETA(Hidden),
   INVALID               UMETA(Hidden),
 };

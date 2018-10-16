@@ -41,6 +41,10 @@ static constexpr auto DEPTH_MAT_PATH =
 static constexpr auto SEMANTIC_SEGMENTATION_MAT_PATH =
   TEXT("Material'/Carla/PostProcessingMaterials/GTMaterial.GTMaterial'");
 
+// Added for LidarPlus project
+static constexpr auto NORMALS_MAT_PATH =
+  TEXT("Material'/Carla/LidarPlusMaterials/Normals.Normals'");
+
 // =============================================================================
 // -- Local static methods and types -------------------------------------------
 // =============================================================================
@@ -107,6 +111,11 @@ ASceneCaptureCamera::ASceneCaptureCamera(const FObjectInitializer &ObjectInitial
   static ConstructorHelpers::FObjectFinder<UMaterial> SEMANTIC_SEGMENTATION(
       SEMANTIC_SEGMENTATION_MAT_PATH);
   PostProcessSemanticSegmentation = SEMANTIC_SEGMENTATION.Object;
+
+  // Added for LidarPlus
+  static ConstructorHelpers::FObjectFinder<UMaterial> NORMALS(NORMALS_MAT_PATH);
+  PostProcessNormals = NORMALS.Object;
+
   NumSceneCapture++;
 }
 
@@ -194,6 +203,10 @@ void ASceneCaptureCamera::BeginPlay()
   else if (PostProcessEffect == EPostProcessEffect::SemanticSegmentation)
   {
     CaptureComponent2D->PostProcessSettings.AddBlendable(PostProcessSemanticSegmentation, 1.0f);
+  }
+  else if (PostProcessEffect == EPostProcessEffect::Normals) // LidarPlus
+  {
+      CaptureComponent2D->PostProcessSettings.AddBlendable(PostProcessNormals, 1.0f);
   }
 
   CaptureComponent2D->UpdateContent();
