@@ -93,6 +93,8 @@ popd >/dev/null
 
 pushd "$UNREAL_PROJECT_FOLDER" >/dev/null
 
+export UE_MONO_DIR=${UE4_ROOT}/Engine/Binaries/ThirdParty/Mono/Mac
+
 # This command usually fails but normally we can continue anyway.
 set +e
 log "Generate Unreal project files..."
@@ -103,7 +105,7 @@ set -e
 sed -i .original -e "s/Linux/Mac/g" Makefile
 
 log "Build CarlaUE4 project..."
-export PATH=${UE4_ROOT}/Engine/Binaries/ThirdParty/Mono/Mac/bin:${PATH}
+#export PATH=${UE4_ROOT}/Engine/Binaries/ThirdParty/Mono/Mac/bin:${PATH}
 make CarlaUE4Editor
 
 if $LAUNCH_UE4_EDITOR ; then

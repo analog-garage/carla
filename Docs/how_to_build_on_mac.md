@@ -1,5 +1,11 @@
 <h1>How to build CARLA on Mac OSX (experimental)</h1>
 
+INote that unlike the Linux build, this one uses the standard Mac compiler tools and
+the standard Unreal Engine 4.19 distribution.
+
+Prerequisites
+-------------
+
 Install the build tools and dependencies
 
     $ brew install git cmake ninja python3 sed curl wget unzip autoconf automake libtool
@@ -9,38 +15,36 @@ the best configuration is to compile everything with the same compiler version
 and C++ runtime library. We use clang 3.9 and LLVM's libc++. You may need to
 change your default clang version to compile Unreal. 
 
-Xcode 8.2.1 is based on clang 3.9, so you can install and activate that by doing the following:
+### Install Xcode 9.2
 
-* Download Xcode 8.2.1 from Apple developer site:  
-  https://developer.apple.com/download/more/.  
-  You may first need to register as developer.
+If you are running macOS "Sierra" 10.12.6, then Xcode 9.2 is the most up-to-date
+version, so you should simply be able to install from the AppStore, otherwise
+you can install from [Apple's developer downloads](https://developer.apple.com/download/more/).
 
-* Uncompress, rename `XCode8.2.1` to avoid clash with latest Xcode and 
-  move to `/Applications` folder.
+If you have installed more than one version of Xcode, you should activate 9.2 using
+the `xcode-select` command line utility. This will set `/usr/bin/clang` and `/usr/bin/clang++`
+to the appropriate versions, and these are what will be used in the build.
 
-* Activate 8.2.1:
+Note that Apple's has it's own clang versioning scheme that tracks the Xcode versions,
+so it is not obvious how the features compare to the LLVM distributions, but this version
+should fully support c++14 features.
 
-        $ sudo xcode-select -s /Applications/XCode.8.2.1/Contents/Developer
+### Install Unreal Engine 4.19
 
-You can use `xcode-select` later to switch back to the original version.
+Install the [Epic Games Launcher](https://www.epicgames.com/unrealtournament/download)
+and use it to download version 4.19 of the Unreal Engine. The default install location
+is `/Users/Shared/Epic Games/`, but it is a good idea to eliminate the space in the path
+and instead use `/Users/Shared/EpicGames/` since some tools seem to have problems with
+the space.
 
-Build Unreal Engine
--------------------
+Although, you don't need to build the engine from source, you do need to add the file
+[GenerateProjectFiles.sh](https://github.com/EpicGames/UnrealEngine/blob/4.19/GenerateProjectFiles.sh) to the root directory from a copy of the Unreal Engine source tree.
 
-!!! note
-    Unreal Engine repositories are set to private. In order to gain access you
-    need to add your GitHub username when you sign up at
-    [www.unrealengine.com](https://www.unrealengine.com).
+### Install the build tools and dependencies
 
-Download and compile Unreal Engine 4.18. Here we will assume you install it at
-"~/UnrealEngine_4.18", but you can install it anywhere, just replace the path
-where necessary.
-
-    $ git clone --depth=1 -b 4.18 https://github.com/EpicGames/UnrealEngine.git ~/UnrealEngine_4.18
-    $ cd ~/UnrealEngine_4.18
-    $ ./Setup.sh && ./GenerateProjectFiles.sh
-
-Load the project into Xcode by double-clicking on the **UE4.xcworkspace** file. Select the **ShaderCompileWorker** for **My Mac** target in the title bar, then select the 'Product > Build' menu item. When Xcode finishes building, do the same for the **UE4** for **My Mac** target. Compiling may take anywhere between ? minutes and an hour, depending on your system specs (not much data on this yet).
+~~~sh
+$ brew install git cmake ninja python3 sed curl wget unzip autoconf automake libtool
+~~~
 
 Build CARLA
 -----------
@@ -57,7 +61,7 @@ Run the setup script to download the content and build all dependencies. It
 takes a while (you can speed up the process by parallelizing the script with the
 `--jobs=8` flag)
 
-    $ ./Xcode8.2.1Setup.sh
+    $ ./Xcode9.2Setup.sh
 
 Once it's done it should print "Success" if everything went well.
 
@@ -65,7 +69,8 @@ To build CARLA, use the rebuild script. This script deletes all intermediate
 files, rebuilds whole CARLA, and launches the editor. Use it too for making a
 clean rebuild of CARLA
 
-    $ UE4_ROOT=~/UnrealEngine_4.18 ./MacRebuild.sh
+    $ UE4_ROOT=/Users/Shared/EpicGames/UE_4.18
+    $ ./MacRebuild.sh
 
 It looks at the environment variable `UE4_ROOT` to find the right version of
 Unreal Engine. You can also add this variable to your "~/.bashrc" or similar.
@@ -88,10 +93,17 @@ the CARLA assets. To download the latest version, run the "Update" script
 Launching the editor
 --------------------
 
-To open the editor once the project is already built
+As long as CarlaUE4 was built against the standard 4.18 engine from the
+Epic Games installer launcher, you can launch the editor from the Epic Games
+Launcher or by opening the `.uproject` file from the finder or by using the
+open command:
+
+   $ open Unreal/CarlaUE4/CarlaUE4.uproject
+
+If you didn't use the standard engine, you can launch the editor using:
 
     $ cd Unreal/CarlaUE4
-    $ open -a ~/UnrealEngine_4.18/Engine/Binaries/Mac/UE4Editor.app "$PWD/CarlaUE4.uproject"
+    $ open -a ${UE4_ROOT}/Engine/Binaries/Mac/UE4Editor.app "$PWD/CarlaUE4.uproject"
 
 Test (Optional)
 ---------------

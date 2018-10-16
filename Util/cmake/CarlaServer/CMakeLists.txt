@@ -20,6 +20,8 @@ if (UNIX)
   if (APPLE)
      set(CMAKE_CXX_COMPILER /usr/bin/clang++)
      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -std=c++14")
+     set(CMAKE_CXX_LINK_FLAGS "\${CMAKE_CXX_LINK_FLAGS} -lc++ -lc++abi" CACHE STRING "" FORCE)
+
   else (APPLE)
      set(CMAKE_CXX_COMPILER /usr/bin/clang++-3.9)
      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC -std=c++14 -pthread")
@@ -36,10 +38,12 @@ if (UNIX)
 
   # Setup libc++.
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-  include_directories("${CARLA_LIBCXX_INSTALL_PATH}/include/c++/v1")
-  link_directories("${CARLA_LIBCXX_INSTALL_PATH}/lib")
-  file(GLOB LibCXX_Shared_Libraries "${CARLA_LIBCXX_INSTALL_PATH}/lib/libc++*.so*")
-  file(GLOB LibCXX_Static_Libraries "${CARLA_LIBCXX_INSTALL_PATH}/lib/libc++*.a")
+  if (NOT APPLE)
+    include_directories("${CARLA_LIBCXX_INSTALL_PATH}/include/c++/v1")
+    link_directories("${CARLA_LIBCXX_INSTALL_PATH}/lib")
+    file(GLOB LibCXX_Shared_Libraries "${CARLA_LIBCXX_INSTALL_PATH}/lib/libc++*.so*")
+    file(GLOB LibCXX_Static_Libraries "${CARLA_LIBCXX_INSTALL_PATH}/lib/libc++*.a")
+  endif (NOT APPLE)
 
   # Setup boost.
   include_directories("${CARLA_BOOST_INSTALL_PATH}/include")
@@ -53,12 +57,13 @@ if (UNIX)
   include_directories("${CARLA_GOOGLETEST_INSTALL_PATH}/include")
   set(GTest_Static_Libraries "${CARLA_GOOGLETEST_INSTALL_PATH}/lib/libgtest.a")
 
-  install(FILES
-      ${LibCXX_Shared_Libraries}
-    DESTINATION shared)
+  if (NOT APPLE)
+    install(FILES
+       ${LibCXX_Shared_Libraries}
+       DESTINATION shared)
+  endif (NOT APPLE)
 
   install(FILES
-      ${LibCXX_Static_Libraries}
       ${Boost_Static_Libraries}
       ${Protobuf_Static_Libraries}
     DESTINATION lib)
@@ -66,7 +71,7 @@ if (UNIX)
 elseif (WIN32)
 
   # Setup boost.
-  include_directories("${CARLA_BOOST_INSTALL_PATH}/boost-1_64")
+  include_directories("${CARLA_BOOST_INSTALL_PATH}/boost-1_67")
   file(GLOB Boost_System_Static_Libraries "${CARLA_BOOST_INSTALL_PATH}/lib/libboost_system*.lib")
   file(GLOB Boost_DateTime_Static_Libraries "${CARLA_BOOST_INSTALL_PATH}/lib/libboost_date_time*.lib")
   set(Boost_Static_Libraries
@@ -85,6 +90,9 @@ elseif (WIN32)
       ${Boost_Static_Libraries}
       ${Protobuf_Static_Libraries}
     DESTINATION lib)
+  if (NOT APPLE)
+     install(FILES ${LibCXX_Static_Libraries} DESTINATION lib)
+  endif (NOT APPLE)
 
 else (UNIX)
   message(FATAL_ERROR "Build configuration not yet available for this platform")

@@ -59,6 +59,11 @@ public class Carla : ModuleRules
     return (Target.Platform == UnrealTargetPlatform.Win64) || (Target.Platform == UnrealTargetPlatform.Win32);
   }
 
+  private bool IsMac(ReadOnlyTargetRules Target)
+  {
+    return (Target.Platform == UnrealTargetPlatform.Mac);
+  }
+
   private bool UseDebugLibs(ReadOnlyTargetRules Target)
   {
     if (IsWindows(Target))
@@ -112,7 +117,10 @@ public class Carla : ModuleRules
     }
     else
     {
-      PublicAdditionalLibraries.Add(Path.Combine(CarlaServerInstallPath, "lib", GetLibName("c++abi")));
+      if (! IsMac(Target))
+      {
+        PublicAdditionalLibraries.Add(Path.Combine(CarlaServerInstallPath, "lib", GetLibName("c++abi")));
+      }
       PublicAdditionalLibraries.Add(Path.Combine(CarlaServerInstallPath, "lib", GetLibName("boost_system")));
       PublicAdditionalLibraries.Add(Path.Combine(CarlaServerInstallPath, "lib", GetLibName("protobuf")));
       PublicAdditionalLibraries.Add(Path.Combine(CarlaServerInstallPath, "lib", GetLibName(CarlaServerLib)));
