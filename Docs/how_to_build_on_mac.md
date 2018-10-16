@@ -29,16 +29,16 @@ Note that Apple's has it's own clang versioning scheme that tracks the Xcode ver
 so it is not obvious how the features compare to the LLVM distributions, but this version
 should fully support c++14 features.
 
-### Install Unreal Engine 4.19
+### Install Unreal Engine 4.18
 
 Install the [Epic Games Launcher](https://www.epicgames.com/unrealtournament/download)
-and use it to download version 4.19 of the Unreal Engine. The default install location
+and use it to download version 4.18 of the Unreal Engine. The default install location
 is `/Users/Shared/Epic Games/`, but it is a good idea to eliminate the space in the path
 and instead use `/Users/Shared/EpicGames/` since some tools seem to have problems with
 the space.
 
 Although, you don't need to build the engine from source, you do need to add the file
-[GenerateProjectFiles.sh](https://github.com/EpicGames/UnrealEngine/blob/4.19/GenerateProjectFiles.sh) to the root directory from a copy of the Unreal Engine source tree.
+[GenerateProjectFiles.sh](https://github.com/EpicGames/UnrealEngine/blob/4.18/GenerateProjectFiles.sh) to the root directory from a copy of the Unreal Engine source tree.
 
 ### Install the build tools and dependencies
 
