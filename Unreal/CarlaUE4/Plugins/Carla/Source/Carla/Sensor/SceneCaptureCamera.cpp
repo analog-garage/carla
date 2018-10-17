@@ -44,6 +44,8 @@ static constexpr auto SEMANTIC_SEGMENTATION_MAT_PATH =
 // Added for LidarPlus project
 static constexpr auto NORMALS_MAT_PATH =
   TEXT("Material'/Carla/LidarPlusMaterials/Normals.Normals'");
+static constexpr auto REFLECTIVITY1_MAT_PATH =
+  TEXT("Material'/Carla/LidarPlusMaterials/Reflectivity1.Reflectivity1'");
 
 // =============================================================================
 // -- Local static methods and types -------------------------------------------
@@ -115,6 +117,8 @@ ASceneCaptureCamera::ASceneCaptureCamera(const FObjectInitializer &ObjectInitial
   // Added for LidarPlus
   static ConstructorHelpers::FObjectFinder<UMaterial> NORMALS(NORMALS_MAT_PATH);
   PostProcessNormals = NORMALS.Object;
+  static ConstructorHelpers::FObjectFinder<UMaterial> REFLECTIVITY1(REFLECTIVITY1_MAT_PATH);
+  PostProcessReflectivity1 = REFLECTIVITY1.Object;
 
   NumSceneCapture++;
 }
@@ -206,7 +210,11 @@ void ASceneCaptureCamera::BeginPlay()
   }
   else if (PostProcessEffect == EPostProcessEffect::Normals) // LidarPlus
   {
-      CaptureComponent2D->PostProcessSettings.AddBlendable(PostProcessNormals, 1.0f);
+    CaptureComponent2D->PostProcessSettings.AddBlendable(PostProcessNormals, 1.0f);
+  }
+  else if (PostProcessEffect == EPostProcessEffect::Reflectivity1) // LidarPlus
+  {
+    CaptureComponent2D->PostProcessSettings.AddBlendable(PostProcessReflectivity1, 1.0f);
   }
 
   CaptureComponent2D->UpdateContent();

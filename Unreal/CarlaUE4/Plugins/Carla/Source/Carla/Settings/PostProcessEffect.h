@@ -18,6 +18,7 @@ enum class EPostProcessEffect : uint8
 
   // Added for LidarPlus project
   Normals               UMETA(DisplayName = "World Normals"),
+  Reflectivity1         UMETA(DisplayName = "Reflectivity1"),
 
   SIZE                  UMETA(Hidden),
   INVALID               UMETA(Hidden),

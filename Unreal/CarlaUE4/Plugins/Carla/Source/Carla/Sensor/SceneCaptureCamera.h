@@ -121,4 +121,6 @@ private:
   // Added for LidarPlus project
   UPROPERTY()
   UMaterial *PostProcessNormals;
+  UPROPERTY()
+  UMaterial *PostProcessReflectivity1;
 };
