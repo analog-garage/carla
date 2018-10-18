@@ -123,4 +123,6 @@ private:
   UMaterial *PostProcessNormals;
   UPROPERTY()
   UMaterial *PostProcessReflectivity1;
+  UPROPERTY()
+  UMaterial *PostProcessReflectivity2;
 };
