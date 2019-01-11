@@ -125,4 +125,6 @@ private:
   UMaterial *PostProcessReflectivity1;
   UPROPERTY()
   UMaterial *PostProcessReflectivity2;
+  UPROPERTY()
+  UMaterial *PostProcessReflectivity3;
 };

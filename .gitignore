@@ -1,6 +1,7 @@
 Dist
 Doxygen
 PythonClient/dist
+PythonClient/build
 Util/Build
 
 *.VC.db
@@ -18,6 +19,7 @@ Util/Build
 *.stackdump
 *.sublime-workspace
 *.workspace
+*.xcworkspace
 *CodeCompletionFolders.txt
 *CodeLitePreProcessor.txt
 .codelite

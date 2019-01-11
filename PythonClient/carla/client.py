@@ -183,7 +183,7 @@ class CarlaClient(object):
 def _make_sensor_parsers(sensors):
     # Added Normals for LidarPlus
     image_types = ['None', 'SceneFinal', 'Depth', 'SemanticSegmentation', 
-                   'Normals', 'Reflectivity1', 'Reflectivity2']
+                   'Normals', 'Reflectivity1', 'Reflectivity2', 'Reflectivity3']
     getimgtype = lambda id: image_types[id] if len(image_types) > id else 'Unknown'
     getint32 = lambda data, index: struct.unpack('<L', data[index*4:index*4+4])[0]
     getint64 = lambda data, index: struct.unpack('<Q', data[index*4:index*4+8])[0]

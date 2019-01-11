@@ -33,6 +33,8 @@ EPostProcessEffect PostProcessEffect::FromString(const FString &String)
     return EPostProcessEffect::Reflectivity1;
   } else if (String == "Reflectivity2") {   // Added for LidarPlus
     return EPostProcessEffect::Reflectivity2;
+  } else if (String == "Reflectivity3") {   // Added for LidarPlus
+    return EPostProcessEffect::Reflectivity3;
   } else {
     UE_LOG(LogCarla, Error, TEXT("Invalid post-processing effect \"%s\""), *String);
     return EPostProcessEffect::INVALID;

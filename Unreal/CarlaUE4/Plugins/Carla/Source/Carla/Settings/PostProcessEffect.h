@@ -20,6 +20,7 @@ enum class EPostProcessEffect : uint8
   Normals               UMETA(DisplayName = "World Normals"),
   Reflectivity1         UMETA(DisplayName = "Reflectivity1"),
   Reflectivity2         UMETA(DisplayName = "Reflectivity2"),
+  Reflectivity3         UMETA(DisplayName = "Reflectivity3"),
 
   SIZE                  UMETA(Hidden),
   INVALID               UMETA(Hidden),
