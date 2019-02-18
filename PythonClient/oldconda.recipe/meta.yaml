@@ -1,0 +1,30 @@
+
+package:
+  name: oldcarla
+  version: 0.8.5
+
+source:
+  path: .
+
+build:
+  noarch: python
+
+requirements:
+  build:
+    - python >=3.6
+    - setuptools
+
+  host:
+    - python >=3.6
+
+  run:
+    - python >=3.6
+
+    - Pillow
+    - numpy
+    - protobuf
+    - matplotlib
+    - future
+
+about:
+  description: Python API for communicating with the 0.8 API of the CARLA server with LidarPlus extensions
